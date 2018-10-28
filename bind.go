@@ -99,12 +99,9 @@ func (l *Conn) SimpleBind(simpleBindRequest *SimpleBindRequest) (*SimpleBindResu
 		}
 	}
 
-	resultCode, resultDescription := getLDAPResultCode(packet)
-	if resultCode != 0 {
-		return result, NewError(resultCode, errors.New(resultDescription))
-	}
+	err = GetLDAPError(packet)
 
-	return result, nil
+	return result, err
 }
 
 // Bind performs a bind with the given username and password.
